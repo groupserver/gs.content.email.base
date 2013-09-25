@@ -34,5 +34,5 @@ class GroupEmail(SiteEmail):
 
     @Lazy
     def groupInfo(self):
-        retval = createObject('groupserver.GroupInfo', self.group)
+        retval = createObject('groupserver.GroupInfo', self.context)
         return retval
