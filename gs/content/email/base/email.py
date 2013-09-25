@@ -15,7 +15,7 @@
 from premailer import transform
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
-from gs.content.baes import SitePage
+from gs.content.base import SitePage
 
 
 class SiteEmail(SitePage):
