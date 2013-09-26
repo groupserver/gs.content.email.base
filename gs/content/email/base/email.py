@@ -22,6 +22,13 @@ class SiteEmail(SitePage):
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
 
+    @Lazy
+    def base(self):
+        s = '/' if self.request['ACTUAL_URL'][-1] == '/' else ''
+        hasIndex = self.request['URL'][-10:] == 'index.html'
+        retval = '{0}{1}'.format(self.request['URL1'], s) if hasIndex else ''
+        return retval
+
     def __call__(self):
         orig = super(SiteEmail, self).__call__()
         retval = transform(orig)
