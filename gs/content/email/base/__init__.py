@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import  # --=mpj17=-- This is quite important
-#lint:disable
-from .email import SiteEmail, GroupEmail  # "email" is a standard module
-#lint:enable
+# --=mpj17=-- The use of absolute_import is quite important, as "email" (sans
+#             ".") is a standard module
+from __future__ import absolute_import
+from .email import SiteEmail, GroupEmail  # lint:ok
