@@ -45,6 +45,7 @@ setup(name='gs.content.email.base',
     zip_safe=True,
     install_requires=[
         'setuptools',
+        'lxml',
         'premailer',
         'zope.cachedescriptors',
         'zope.component',

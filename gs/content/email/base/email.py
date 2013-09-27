@@ -12,6 +12,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from lxml.etree import HTMLParser, fromstring as tree_fromstring, \
+    tostring as root_tostring
 from premailer import transform
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -29,9 +31,23 @@ class SiteEmail(SitePage):
         retval = '{0}{1}'.format(self.request['URL1'], s) if hasIndex else ''
         return retval
 
+    def remove_style_elements(self, html):
+        parser = HTMLParser()
+        stripped = html.strip()
+        tree = tree_fromstring(stripped, parser)
+        rootTree = tree.getroottree()
+        root = rootTree.getroot()
+        style = root.findall('*/style')
+        for s in style:
+            parent = s.find('..')
+            parent.remove(s)
+        retval = root_tostring(root, encoding='utf-8', method='xml')
+        return retval
+
     def __call__(self):
         orig = super(SiteEmail, self).__call__()
-        retval = transform(orig)
+        premailed = transform(orig, base_url=self.base)
+        retval = self.remove_style_elements(premailed)
         return retval
 
 
