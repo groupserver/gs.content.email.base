@@ -44,8 +44,8 @@ class SiteEmail(SitePage):
         retval = root_tostring(root, encoding='utf-8', method='xml')
         return retval
 
-    def __call__(self):
-        orig = super(SiteEmail, self).__call__()
+    def __call__(self, *args, **kw):
+        orig = super(SiteEmail, self).__call__(args, kw)
         premailed = transform(orig, base_url=self.base)
         retval = self.remove_style_elements(premailed)
         return retval
