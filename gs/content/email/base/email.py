@@ -20,6 +20,15 @@ from zope.component import createObject
 from gs.content.base import SitePage
 
 
+#FIXME: Move to gs.utils
+def to_unicode_or_bust(obj, encoding='utf-8'):
+    'http://farmdev.com/talks/unicode/'
+    if isinstance(obj, basestring):
+        if not isinstance(obj, unicode):
+            obj = unicode(obj, encoding)
+    return obj
+
+
 class SiteEmail(SitePage):
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
@@ -47,7 +56,8 @@ class SiteEmail(SitePage):
     def __call__(self, *args, **kw):
         orig = super(SiteEmail, self).__call__(args, kw)
         premailed = transform(orig, base_url=self.base)
-        retval = self.remove_style_elements(premailed)
+        clean = self.remove_style_elements(premailed)
+        retval = to_unicode_or_bust(clean)
         return retval
 
 
