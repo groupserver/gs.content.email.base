@@ -55,9 +55,14 @@ class SiteEmail(SitePage):
 
     def __call__(self, *args, **kw):
         orig = super(SiteEmail, self).__call__(args, kw)
-        premailed = transform(orig, base_url=self.base)
-        clean = self.remove_style_elements(premailed)
-        retval = to_unicode_or_bust(clean)
+        if orig[0] == '<':
+            # --=mpj17=-- This is probabily markup, so tidy it some.
+            premailed = transform(orig, base_url=self.base)
+            clean = self.remove_style_elements(premailed)
+            retval = to_unicode_or_bust(clean)
+        else:
+            # --=mpj17=-- This is probabily plain-text, so just return it.
+            retval = orig
         return retval
 
 
