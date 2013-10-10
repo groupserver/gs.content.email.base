@@ -17,6 +17,7 @@ from textwrap import TextWrapper
 
 class TextMixin(object):
     textWrapper = TextWrapper(width=74)
+    charset = 'UTF-8'
 
     @classmethod
     def fill(cls, mesg):
@@ -27,7 +28,17 @@ class TextMixin(object):
         return retval
 
     def set_header(self, filename):
+        if not hasattr(self, 'request'):
+            m = '{0} has no "request"'.format(self)
+            raise ValueError(m)
+        if not hasattr(self.request, 'response'):
+            m = '{0} ({1}) has no "response"'.format(self.request, self)
+            raise ValueError(m)
+
         response = self.request.response
-        response.setHeader("Content-Type", 'text/plain; charset=UTF-8')
+
+        ctype = 'text/plain; charset={0}'.format(self.charset)
+        response.setHeader("Content-Type", ctype)
+
         disposition = 'inline; filename="{0}"'.format(filename)
         response.setHeader('Content-Disposition', disposition)
