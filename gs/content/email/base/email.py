@@ -54,7 +54,7 @@ class SiteEmail(SitePage):
         return retval
 
     def __call__(self, *args, **kw):
-        orig = super(SiteEmail, self).__call__(args, kw)
+        orig = super(SiteEmail, self).__call__(*args, **kw)
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
             premailed = transform(orig, base_url=self.base)
