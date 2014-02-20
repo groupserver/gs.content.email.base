@@ -17,16 +17,8 @@ from lxml.etree import HTMLParser, fromstring as tree_fromstring, \
 from premailer import transform
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
+from gs.core import to_unicode_or_bust
 from gs.content.base import SitePage
-
-
-#FIXME: Move to gs.utils
-def to_unicode_or_bust(obj, encoding='utf-8'):
-    'http://farmdev.com/talks/unicode/'
-    if isinstance(obj, basestring):
-        if not isinstance(obj, unicode):
-            obj = unicode(obj, encoding)
-    return obj
 
 
 class SiteEmail(SitePage):
