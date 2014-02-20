@@ -12,7 +12,9 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from __future__ import unicode_literals
 from textwrap import TextWrapper
+from gs.core import to_ascii
 
 
 class TextMixin(object):
@@ -38,7 +40,8 @@ class TextMixin(object):
         response = self.request.response
 
         ctype = 'text/plain; charset={0}'.format(self.charset)
-        response.setHeader("Content-Type", ctype)
+        response.setHeader(to_ascii("Content-Type"), to_ascii(ctype))
 
         disposition = 'inline; filename="{0}"'.format(filename)
-        response.setHeader('Content-Disposition', disposition)
+        response.setHeader(to_ascii('Content-Disposition'),
+                            to_ascii(disposition))
