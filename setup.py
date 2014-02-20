@@ -50,6 +50,7 @@ setup(name='gs.content.email.base',
         'zope.cachedescriptors',
         'zope.component',
         'gs.content.base',
+        'gs.core',
     ],
     entry_points="""
     # -*- Entry points: -*-
