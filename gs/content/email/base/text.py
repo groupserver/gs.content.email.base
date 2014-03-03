@@ -23,10 +23,10 @@ class TextMixin(object):
 
     @classmethod
     def fill(cls, mesg):
-        if not mesg:
-            m = 'No text to fill.'
-            raise ValueError(m)
-        retval = cls.textWrapper.fill(mesg)
+        if mesg:
+            retval = cls.textWrapper.fill(mesg)
+        else:
+            retval = ''
         return retval
 
     def set_header(self, filename):
