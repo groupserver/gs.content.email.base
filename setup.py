@@ -61,6 +61,8 @@ setup(name='gs.content.email.base',
         'gs.content.base',
         'gs.core',
     ],
+    test_suite="gs.content.email.base.tests.test_all",
+    tests_require=['mock', 'zope.publisher', ],
     entry_points="""
     # -*- Entry points: -*-
     """,)
