@@ -31,8 +31,9 @@ class SiteEmail(SitePage):
     def base(self):
         'The base URL of the page, defaulting to /.'
         s = '/' if self.request.get('ACTUAL_URL', '/')[-1] == '/' else ''
-        hasIndex = self.request['URL'][-10:] == 'index.html'
-        retval = '{0}{1}'.format(self.request['URL1'], s) if hasIndex else ''
+        hasIndex = self.request.get('URL', '/')[-10:] == 'index.html'
+        u1 = self.request.get('URL1', '')
+        retval = '{0}{1}'.format(u1, s) if hasIndex else u1
         return retval
 
     @staticmethod
