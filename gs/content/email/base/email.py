@@ -12,6 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from __future__ import unicode_literals
 from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
     tostring as root_tostring)
 from premailer import transform
