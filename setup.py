@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,32 +12,41 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-import os
 from setuptools import setup, find_packages
+import codecs
+import os
 from version import get_version
+
+with codecs.open('README.txt', encoding='utf-8') as f:
+    long_description = f.read()
+with codecs.open(os.path.join("docs", "HISTORY.txt"), encoding='utf-8') as f:
+    long_description += '\n' + f.read()
 
 version = get_version()
 
 setup(name='gs.content.email.base',
     version=version,
     description="HTML-formatted email notifications from GroupServer.",
-    long_description=open("README.txt").read() + "\n" +
-                      open(os.path.join("docs", "HISTORY.txt")).read(),
+    long_description=long_description,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
-        "Environment :: Web Environment",
-        "Framework :: Zope2",
         "Intended Audience :: Developers",
         'License :: OSI Approved :: Zope Public License',
         "Natural Language :: English",
-        "Operating System :: POSIX :: Linux"
+        "Operating System :: OS Independent",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: Implementation :: CPython",
+        'Topic :: Communications :: Email',
+        'Topic :: Internet :: WWW/HTTP',
         "Topic :: Software Development :: Libraries :: Python Modules",
+        'Topic :: Text Processing :: Markup :: HTML',
       ],
-    keywords='zope page site',
+    keywords='zope, page, site, email, notification, message, html',
     author='Michael JasonSmith',
     author_email='mpj17@onlinegroups.net',
-    url='http://groupserver.org/',
+    url='https://source.iopen.net/groupserver/gs.content.email.base/',
     license='ZPL 2.1',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['gs', 'gs.content', 'gs.content.email'],
