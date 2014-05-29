@@ -16,7 +16,7 @@ from __future__ import unicode_literals
 from mock import MagicMock
 from unittest import TestCase
 from zope.publisher.browser import TestRequest
-from gs.content.email.base.email import SiteEmail
+from gs.content.email.base.email import SiteEmail, GroupEmail
 import gs.content.email.base.email
 
 
@@ -85,6 +85,7 @@ class TestSiteEmailRemoveStyle(TestCase):
 
     @staticmethod
     def discard_whitespace(t):
+        'Discard newline and space characters, making testing easier.'
         retval = t.replace('\n', '').replace(' ', '')
         return retval
 
@@ -102,6 +103,7 @@ class TestSiteEmailRemoveStyle(TestCase):
         self.assertEqual(self.withoutStyle, r)
 
     def test_call(self):
+        'Test the __call__ method, simulating rendering.'
         gs.content.email.base.email.SitePage.__call__ = MagicMock(
                                                 return_value=self.withStyle)
         request = TestRequest(
@@ -116,3 +118,12 @@ class TestSiteEmailRemoveStyle(TestCase):
 
 class TestGroupEmail(TestCase):
     'Test the GroupEmail view'
+
+    def test_groupInfo(self):
+        'Test that groupInfo does vaguely the right thing'
+        g = GroupEmail(None, None)
+        gs.content.email.base.email.createObject = MagicMock(return_value='g?')
+        r = g.groupInfo
+        self.assertEqual('g?', r)
+        gs.content.email.base.email.createObject.assert_called_once_with(
+            'groupserver.GroupInfo', None)

@@ -15,12 +15,13 @@
 from __future__ import absolute_import, unicode_literals
 from unittest import TestSuite, main as unittest_main
 from gs.content.email.base.tests.email import (TestSiteEmailBase,
-                                                TestSiteEmailRemoveStyle)
+                                                TestSiteEmailRemoveStyle,
+                                                TestGroupEmail)
 from gs.content.email.base.tests.text import (TestTextMixinFill,
                                                 TestTextMixinHeader)
 
-testCases = (TestSiteEmailBase, TestSiteEmailRemoveStyle, TestTextMixinFill,
-                TestTextMixinHeader, )
+testCases = (TestSiteEmailBase, TestSiteEmailRemoveStyle, TestGroupEmail,
+                TestTextMixinFill, TestTextMixinHeader, )
 
 
 def load_tests(loader, tests, pattern):
