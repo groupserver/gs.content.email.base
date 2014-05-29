@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright © 2013 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,8 +12,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-from lxml.etree import HTMLParser, fromstring as tree_fromstring, \
-    tostring as root_tostring
+from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
+    tostring as root_tostring)
 from premailer import transform
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -22,17 +22,21 @@ from gs.content.base import SitePage
 
 
 class SiteEmail(SitePage):
+    'The core page view for an email message from a site'
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
 
     @Lazy
     def base(self):
-        s = '/' if self.request['ACTUAL_URL'][-1] == '/' else ''
+        'The base URL of the page, defaulting to /.'
+        s = '/' if self.request.get('ACTUAL_URL', '/')[-1] == '/' else ''
         hasIndex = self.request['URL'][-10:] == 'index.html'
         retval = '{0}{1}'.format(self.request['URL1'], s) if hasIndex else ''
         return retval
 
-    def remove_style_elements(self, html):
+    @staticmethod
+    def remove_style_elements(html):
+        'Remove the style elements from some HTML'
         parser = HTMLParser()
         stripped = html.strip()
         tree = tree_fromstring(stripped, parser)
@@ -46,6 +50,7 @@ class SiteEmail(SitePage):
         return retval
 
     def __call__(self, *args, **kw):
+        'Render the page, and then run it through premailer.'
         orig = super(SiteEmail, self).__call__(*args, **kw)
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
@@ -59,6 +64,7 @@ class SiteEmail(SitePage):
 
 
 class GroupEmail(SiteEmail):
+    'The view to render an email message from a group'
     def __init__(self, context, request):
         super(GroupEmail, self).__init__(context, request)
 
