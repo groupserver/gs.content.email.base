@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,10 +11,11 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import unicode_literals
+from urllib import quote
 from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
-    tostring as root_tostring)
+                        tostring as root_tostring)
 from premailer import transform
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
@@ -24,6 +25,10 @@ from gs.content.base import SitePage
 
 class SiteEmail(SitePage):
     'The core page view for an email message from a site'
+
+    #: The mailto URI, for writing email messages to support.
+    MAILTO = 'mailto:{to}?Subject={subject}&body={body}'
+
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
 
@@ -34,6 +39,24 @@ class SiteEmail(SitePage):
         hasIndex = self.request.get('URL', '/')[-10:] == 'index.html'
         u1 = self.request.get('URL1', '')
         retval = '{0}{1}'.format(u1, s) if hasIndex else u1
+        return retval
+
+    @staticmethod
+    def quote(val):
+        'Quote a value in such a way that it can be put in a ``mailto``'
+        uval = to_unicode_or_bust(val)
+        utf8val = uval.encode('utf-8')
+        retval = quote(utf8val)
+        return retval
+
+    @classmethod
+    def mailto(cls, toAddress, subject, body):
+        '''Create a ``mailto`` URI with the correct address, subject, and
+        body.'''
+        quotedSubject = cls.quote(subject)
+        quotedBody = cls.quote(body)
+        retval = cls.MAILTO.format(to=toAddress, subject=quotedSubject,
+                                   body=quotedBody)
         return retval
 
     @staticmethod
