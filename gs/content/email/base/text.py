@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2013 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,7 +11,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import unicode_literals
 from textwrap import TextWrapper
 from gs.core import to_ascii
@@ -44,4 +44,4 @@ class TextMixin(object):
 
         disposition = 'inline; filename="{0}"'.format(filename)
         response.setHeader(to_ascii('Content-Disposition'),
-                            to_ascii(disposition))
+                           to_ascii(disposition))
