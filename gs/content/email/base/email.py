@@ -24,7 +24,10 @@ from gs.content.base import SitePage
 
 
 class SiteEmail(SitePage):
-    'The core page view for an email message from a site'
+    '''The core page view for an email message from a site (a notification)
+
+:param object context: The context for the page.
+:param object request: The request for the page.'''
 
     #: The mailto URI, for writing email messages to support.
     MAILTO = 'mailto:{to}?Subject={subject}&body={body}'
@@ -34,7 +37,9 @@ class SiteEmail(SitePage):
 
     @Lazy
     def base(self):
-        'The base URL of the page, defaulting to /.'
+        '''The base URL of the page
+:returns: The base URL for the email, defaulting to ``/``.
+:rtype: str'''
         s = '/' if self.request.get('ACTUAL_URL', '/')[-1] == '/' else ''
         hasIndex = self.request.get('URL', '/')[-10:] == 'index.html'
         u1 = self.request.get('URL1', '')
@@ -43,7 +48,12 @@ class SiteEmail(SitePage):
 
     @staticmethod
     def quote(val):
-        'Quote a value in such a way that it can be put in a ``mailto``'
+        '''Quote a value in such a way that it can be put in a ``mailto``
+
+:param str val: The value to quote.
+:returns: The quoted value, encoded in UTF-8, and escaped so it is safe in
+          a URI.
+:rtype: str'''
         uval = to_unicode_or_bust(val)
         utf8val = uval.encode('utf-8')
         retval = quote(utf8val)
@@ -51,8 +61,18 @@ class SiteEmail(SitePage):
 
     @classmethod
     def mailto(cls, toAddress, subject, body):
-        '''Create a ``mailto`` URI with the correct address, subject, and
-        body.'''
+        '''Create a ``mailto`` URI
+
+:param str toAddress: The address for the ``mailto``.
+:param str subject: The subject for the email.
+:param str body: The body of the message.
+
+It is very common to put links with complex ``mailto`` URIs in
+notifications. These ``mailto`` links normally are directed at the email
+address for the support group for the site, and contain information that
+will be useful in the support group, such as links to the profile of the
+person who received the notification, and links back to the relevant
+group.'''
         quotedSubject = cls.quote(subject)
         quotedBody = cls.quote(body)
         retval = cls.MAILTO.format(to=toAddress, subject=quotedSubject,
