@@ -67,6 +67,8 @@ class SiteEmail(SitePage):
 :param str toAddress: The address for the ``mailto``.
 :param str subject: The subject for the email.
 :param str body: The body of the message.
+:returns: A string that starts with ``mailto:`` and contains the parameters
+:rtype: str
 
 It is very common to put links with complex ``mailto`` URIs in
 notifications. These ``mailto`` links normally are directed at the email

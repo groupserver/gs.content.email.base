@@ -79,6 +79,6 @@ class TestTextMixinHeader(TestCase):
     def test_set_header_unicode(self):
         'Test a call to set_header when some Unicode is passed in'
         self.textMixin.request = MagicMock()
-        self.textMixin.set_header(self.filename + '?')
+        self.textMixin.set_header(self.filename + '\u2014')
         args, kwargs = self.textMixin.request.response.setHeader.call_args
         self.assertNotIn('?', args[1])

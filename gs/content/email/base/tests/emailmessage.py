@@ -117,7 +117,7 @@ class TestSiteEmailRemoveStyle(TestCase):
 
 
 class TestEmailMailto(TestCase):
-
+    'Test the mailto creation part of the Email class'
     def test_quote_unicode(self):
         'Test quoting a Unicode string'
         siteEmail = SiteEmail(None, None)
@@ -131,16 +131,35 @@ class TestEmailMailto(TestCase):
         self.assertEqual(
             'This%20is%20unicode%20text%20%E2%80%94%20actually', r)
 
+    def test_quote_ascii(self):
+        'Test quoting an ASCII string'
+        siteEmail = SiteEmail(None, None)
+        r = siteEmail.quote(b'ascii text')
+        self.assertEqual('ascii%20text', r)
+
+    def test_mailto(self):
+        'Test the construction of a "mailto" URI'
+        body = 'This is unicode text \u2014 actually'
+        subject = 'A message'
+        to = 'support@lists.example.com'
+        siteEmail = SiteEmail(None, None)
+        r = siteEmail.mailto(to, subject, body)
+
+        expected = 'mailto:support@lists.example.com?Subject=A%20message'\
+            '&body=This%20is%20unicode%20text%20%E2%80%94%20actually'
+        self.assertEqual(expected, r)
+
 
 class TestGroupEmail(TestCase):
     'Test the GroupEmail view'
 
     def test_groupInfo(self):
         'Test that groupInfo does vaguely the right thing'
+        mod = gs.content.email.base.emailmessage
         g = GroupEmail(None, None)
-        gs.content.email.base.email.createObject = MagicMock(
+        mod.createObject = MagicMock(
             return_value='g?')
         r = g.groupInfo
         self.assertEqual('g?', r)
-        gs.content.email.base.email.createObject.assert_called_once_with(
+        mod.createObject.assert_called_once_with(
             'groupserver.GroupInfo', None)

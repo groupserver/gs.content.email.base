@@ -5,7 +5,7 @@ from __future__ import absolute_import, unicode_literals
 #lint:disable
 from zope.i18nmessageid import MessageFactory
 GSMessageFactory = MessageFactory('gs.content.email.base')
-from .email import SiteEmail, GroupEmail
+from .emailmessage import SiteEmail, GroupEmail
 from .notifier import (NotifierABC, GroupNotifierABC)
 from .text import TextMixin
 from .anonymousnotifier import AnonymousNotifierABC
