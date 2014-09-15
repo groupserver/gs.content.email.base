@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,20 +11,22 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from setuptools import setup, find_packages
 import codecs
 import os
 from version import get_version
 
-with codecs.open('README.txt', encoding='utf-8') as f:
+with codecs.open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
-with codecs.open(os.path.join("docs", "HISTORY.txt"), encoding='utf-8') as f:
+with codecs.open(os.path.join("docs", "HISTORY.rst"),
+                 encoding='utf-8') as f:
     long_description += '\n' + f.read()
 
 version = get_version()
 
-setup(name='gs.content.email.base',
+setup(
+    name='gs.content.email.base',
     version=version,
     description="HTML-formatted email notifications from GroupServer.",
     long_description=long_description,
@@ -42,7 +44,7 @@ setup(name='gs.content.email.base',
         'Topic :: Internet :: WWW/HTTP',
         "Topic :: Software Development :: Libraries :: Python Modules",
         'Topic :: Text Processing :: Markup :: HTML',
-      ],
+    ],
     keywords='zope, page, site, email, notification, message, html',
     author='Michael JasonSmith',
     author_email='mpj17@onlinegroups.net',
