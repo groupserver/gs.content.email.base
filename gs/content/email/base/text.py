@@ -18,11 +18,19 @@ from gs.core import to_ascii
 
 
 class TextMixin(object):
+    '''A mixin for the text-version of email messages'''
     textWrapper = TextWrapper(width=74)
     charset = 'UTF-8'
 
     @classmethod
     def fill(cls, mesg):
+        '''Fill the text.
+
+:param str mesg: The text that needs to be wrapped.
+:returns: The text wrapped to 74-characters.
+:rtype: str
+
+:See also: :class:`textwrap.TextWrapper`'''
         if mesg:
             retval = cls.textWrapper.fill(mesg)
         else:
@@ -30,6 +38,18 @@ class TextMixin(object):
         return retval
 
     def set_header(self, filename):
+        """Set the current request-header to the correct value.
+
+:param str filename: The name of the page if it is saved.
+:returns: Nothing.
+:raises ValueError: There is no :attr:`self.request` or
+                    :attr:`self.request.response`
+
+Normally browsers *assume* that the document being viewed in ``text/html``.
+This method sets the ``Content-type`` header to
+``text/plain; charset=UTF-8`` so the message looks correct. In addition
+the ``Content-disposition`` header is set so :obj:`filename` is the name of
+the page when it is saved. (This is mostly useful for debugging.)"""
         if not hasattr(self, 'request'):
             m = '{0} has no "request"'.format(self)
             raise ValueError(m)

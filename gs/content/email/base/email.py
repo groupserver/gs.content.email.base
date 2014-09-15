@@ -38,6 +38,7 @@ class SiteEmail(SitePage):
     @Lazy
     def base(self):
         '''The base URL of the page
+
 :returns: The base URL for the email, defaulting to ``/``.
 :rtype: str'''
         s = '/' if self.request.get('ACTUAL_URL', '/')[-1] == '/' else ''
@@ -95,7 +96,19 @@ group.'''
         return retval
 
     def __call__(self, *args, **kw):
-        'Render the page, and then run it through premailer.'
+        '''Render the page, and then run it through :mod:`premailer`
+
+:param list args: The arguments to the page.
+:param dict kw: The keyword-arguments to the page.
+
+This method calls the __call__ of the super-class with the ``args`` and
+``kw``. If the output is HTML it:
+
+* Turns the HTML ``<style>`` elements into ``style`` attributtes by calling
+  :func:`premailer.transform`, and
+* Removes the unused HTML ``<style>`` elements.
+
+This allows the HTML to be rendered consistently in email-clients.'''
         orig = super(SiteEmail, self).__call__(*args, **kw)
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
@@ -115,5 +128,9 @@ class GroupEmail(SiteEmail):
 
     @Lazy
     def groupInfo(self):
+        '''Information about the group.
+
+:returns: The information about the group that is providing the context.
+:rtype: :class:`Products.GSGroup.interfaces.IGSGroupInfo`'''
         retval = createObject('groupserver.GroupInfo', self.context)
         return retval

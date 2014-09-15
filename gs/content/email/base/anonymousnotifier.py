@@ -25,7 +25,7 @@ UTF8 = 'utf-8'
 
 
 class AnonymousNotifierABC(NotifierABC):
-    '''An abstract base-class tp create a notifier for an *anonymous*
+    '''An abstract base-class to create a notifier for an *anonymous*
 person, that is someone without a profile.'''
     __metaclass__ = ABCMeta
 
@@ -37,8 +37,9 @@ person, that is someone without a profile.'''
 :type siteInfo: :class:`Products.GSContent.interfaces.IGSSiteInfo`
 :returns: A formatted email address consisting of the site-name and the
           support email address:
-         ``Example Groups Support <support@example.com>``.
-:rtype: str'''
+          ``Example Groups Support <support@example.com>``.
+:rtype: str
+'''
         siteName = _('notify-anonymous-support-name', '${siteName} Support',
                      mapping={'siteName': siteInfo.name})
         translatedSiteName = translate(siteName)
@@ -59,7 +60,8 @@ person, that is someone without a profile.'''
 :param str txtMessage: The body of the email message in plain-text format.
 :param str htmlMessage: The body of the email message in HTML format.
 :returns: An email message in MIME format.
-:rtype: str'''
+:rtype: str
+'''
         container = MIMEMultipart('alternative')
         container['Subject'] = str(Header(subject, UTF8))
         container['To'] = toAddr

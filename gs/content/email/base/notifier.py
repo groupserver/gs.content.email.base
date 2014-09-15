@@ -76,7 +76,7 @@ set.'''
 
     @abstractmethod
     def notify(self):
-        'Send the notification'
+        'Send the notification. **Must be defined by subclasses.**'
 
 
 class GroupNotifierABC(NotifierABC):
