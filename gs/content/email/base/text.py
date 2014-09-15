@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ############################################################################
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 from textwrap import TextWrapper
 from gs.core import to_ascii
 

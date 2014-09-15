@@ -60,6 +60,8 @@ setup(
         'premailer',
         'zope.cachedescriptors',
         'zope.component',
+        'zope.i18n',
+        'zope.i18nmessageid',
         'gs.content.base',
         'gs.core',
     ],

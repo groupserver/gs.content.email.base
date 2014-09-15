@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,13 +11,13 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import unicode_literals
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from mock import MagicMock
 from unittest import TestCase
 from zope.publisher.browser import TestRequest
-from gs.content.email.base.email import SiteEmail, GroupEmail
-import gs.content.email.base.email
+from gs.content.email.base.emailmessage import SiteEmail, GroupEmail
+import gs.content.email.base.emailmessage
 
 
 class TestSiteEmailBase(TestCase):
@@ -94,7 +94,7 @@ class TestSiteEmailRemoveStyle(TestCase):
         siteEmail = SiteEmail(None, None)
         r = siteEmail.remove_style_elements(self.withStyle)
         self.assertEqual(self.discard_whitespace(self.withoutStyle),
-                            self.discard_whitespace(r))
+                         self.discard_whitespace(r))
 
     def test_remove_style_no_style(self):
         'Ensure that things are ok if there is no <style> element'
@@ -104,8 +104,8 @@ class TestSiteEmailRemoveStyle(TestCase):
 
     def test_call(self):
         'Test the __call__ method, simulating rendering.'
-        gs.content.email.base.email.SitePage.__call__ = MagicMock(
-                                                return_value=self.withStyle)
+        gs.content.email.base.emailmessage.SitePage.__call__ = MagicMock(
+            return_value=self.withStyle)
         request = TestRequest(
             ACTUAL_URL='http://groups.example.com/email/page.html',
             URL='http://groups.example.com/email/page.html',
@@ -113,7 +113,23 @@ class TestSiteEmailRemoveStyle(TestCase):
         siteEmail = SiteEmail(None, request)
         r = siteEmail()
         self.assertEqual(self.discard_whitespace(self.withStyleAttr),
-                            self.discard_whitespace(r))
+                         self.discard_whitespace(r))
+
+
+class TestEmailMailto(TestCase):
+
+    def test_quote_unicode(self):
+        'Test quoting a Unicode string'
+        siteEmail = SiteEmail(None, None)
+        r = siteEmail.quote('unicode text')
+        self.assertEqual('unicode%20text', r)
+
+    def test_quote_unicode_full(self):
+        'Test quoting a Unicode string with non-ASCII in it'
+        siteEmail = SiteEmail(None, None)
+        r = siteEmail.quote('This is unicode text \u2014 actually')
+        self.assertEqual(
+            'This%20is%20unicode%20text%20%E2%80%94%20actually', r)
 
 
 class TestGroupEmail(TestCase):
@@ -122,7 +138,8 @@ class TestGroupEmail(TestCase):
     def test_groupInfo(self):
         'Test that groupInfo does vaguely the right thing'
         g = GroupEmail(None, None)
-        gs.content.email.base.email.createObject = MagicMock(return_value='g?')
+        gs.content.email.base.email.createObject = MagicMock(
+            return_value='g?')
         r = g.groupInfo
         self.assertEqual('g?', r)
         gs.content.email.base.email.createObject.assert_called_once_with(

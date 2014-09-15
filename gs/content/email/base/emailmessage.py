@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ############################################################################
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 from urllib import quote
 from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
                         tostring as root_tostring)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,17 +11,18 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import, unicode_literals
 from unittest import TestSuite, main as unittest_main
 from gs.content.email.base.tests.email import (TestSiteEmailBase,
-                                                TestSiteEmailRemoveStyle,
-                                                TestGroupEmail)
+                                               TestSiteEmailRemoveStyle,
+                                               TestGroupEmail,
+                                               TestEmailMailto)
 from gs.content.email.base.tests.text import (TestTextMixinFill,
-                                                TestTextMixinHeader)
+                                              TestTextMixinHeader)
 
 testCases = (TestSiteEmailBase, TestSiteEmailRemoveStyle, TestGroupEmail,
-                TestTextMixinFill, TestTextMixinHeader, )
+             TestEmailMailto, TestTextMixinFill, TestTextMixinHeader, )
 
 
 def load_tests(loader, tests, pattern):

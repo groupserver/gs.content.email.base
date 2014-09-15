@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,8 +11,8 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
-from __future__ import unicode_literals
+############################################################################
+from __future__ import absolute_import, unicode_literals
 from mock import MagicMock
 from unittest import TestCase
 from gs.content.email.base.text import TextMixin
@@ -34,8 +34,8 @@ class TestTextMixinFill(TestCase):
         'Test a normal run of the fill class-method'
         longText = '''Glib's Fourth Law of Unreliability:
 
-Investment in reliability will increase until it exceeds the probable cost of
-errors, or until someone insists on gettingsome useful work done.'''
+Investment in reliability will increase until it exceeds the probable cost
+of errors, or until someone insists on gettingsome useful work done.'''
         r = self.textMixin.fill(longText)
 
         self.assertEqual(self.one_line(longText), self.one_line(r))
@@ -67,16 +67,18 @@ class TestTextMixinHeader(TestCase):
 
     def test_set_header_no_request(self):
         'Test a call to set_header when there is no request'
-        self.assertRaises(ValueError, self.textMixin.set_header, self.filename)
+        self.assertRaises(ValueError, self.textMixin.set_header,
+                          self.filename)
 
     def test_set_header_no_response(self):
         'Test a call to set_header when there is no request.response'
         self.textMixin.request = None
-        self.assertRaises(ValueError, self.textMixin.set_header, self.filename)
+        self.assertRaises(ValueError, self.textMixin.set_header,
+                          self.filename)
 
     def test_set_header_unicode(self):
         'Test a call to set_header when some Unicode is passed in'
         self.textMixin.request = MagicMock()
-        self.textMixin.set_header(self.filename + '…')
+        self.textMixin.set_header(self.filename + '?')
         args, kwargs = self.textMixin.request.response.setHeader.call_args
-        self.assertNotIn('…', args[1])
+        self.assertNotIn('?', args[1])

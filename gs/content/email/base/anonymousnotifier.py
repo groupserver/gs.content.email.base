@@ -14,7 +14,7 @@
 ############################################################################
 from __future__ import absolute_import, unicode_literals
 from abc import ABCMeta
-from email.Header import Header
+from email.header import Header
 from email.MIMEText import MIMEText
 from email.MIMEMultipart import MIMEMultipart
 from email.utils import formataddr
