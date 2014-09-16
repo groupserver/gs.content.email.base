@@ -19,11 +19,12 @@ from gs.content.email.base.tests.emailmessage import (
     TestEmailMailto)
 from gs.content.email.base.tests.text import (TestTextMixinFill,
                                               TestTextMixinHeader)
-from gs.content.email.base.tests.notifier import (TestNotifier)
+from gs.content.email.base.tests.notifier import (TestNotifier,
+                                                  TestAnonymousNotifier)
 
 testCases = (TestSiteEmailBase, TestSiteEmailRemoveStyle, TestGroupEmail,
              TestEmailMailto, TestTextMixinFill, TestTextMixinHeader,
-             TestNotifier)
+             TestNotifier, TestAnonymousNotifier)
 
 
 def load_tests(loader, tests, pattern):
