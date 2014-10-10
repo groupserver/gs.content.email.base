@@ -1,4 +1,3 @@
-setuptools
 lxml
 premailer
 zope.cachedescriptors
@@ -6,5 +5,4 @@ zope.component
 zope.i18n
 zope.i18nmessageid
 -e git+https://github.com/groupserver/gs.content.base.git@master#egg=gs.content.base
--e git+https://github.com/groupserver/Products.GSContent.git@master#egg=Products.GSContent
 gs.core
