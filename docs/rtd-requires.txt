@@ -5,6 +5,6 @@ zope.cachedescriptors
 zope.component
 zope.i18n
 zope.i18nmessageid
-git+ssh://git@github.com:groupserver/gs.content.base.git#egg=gs.content.base
-git+ssh://git@github.com:groupserver/Products.GSContent#egg=Products.GSContent
+git+https://github.com/groupserver/gs.content.base.git#egg=gs.content.base
+git+https://github.com/groupserver/Products.GSContent.git#egg=Products.GSContent
 gs.core
