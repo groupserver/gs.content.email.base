@@ -13,7 +13,11 @@
 #
 ############################################################################
 from __future__ import absolute_import, unicode_literals
-from urllib import quote
+import sys
+if sys.version_info >= (3, ):  # pragma: no cover
+    from urllib.parse import quote
+else:  # Python 2
+    from urllib import quote
 from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
                         tostring as root_tostring)
 from premailer import transform
