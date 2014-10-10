@@ -1,9 +1,10 @@
-:mod:`gs.group.member.join` API
-===============================
+:mod:`gs.content.email.base` API
+================================
 
 There are two main parts to the API for
-:mod:`gs.group.member.join`. The `notifiers`_ send out the
-message, while the `message bodies`_ define it.
+:mod:`gs.content.email.base`. The `notifiers`_ coordinate the
+rendering and sending of the message, while the `message bodies`_
+(plural) define it.
 
 Notifiers
 ---------
@@ -120,8 +121,8 @@ results in HTML that can be sent as a MIME-attachment.
 Site email
 ~~~~~~~~~~
 
-The :class:`gs.content.email.base.SiteEmail` class is used by
-messages made from outside the Group context. For example:
+The :class:`.SiteEmail` class is used by messages made from
+outside the Group context. For example:
 
 .. code-block:: xml
 
@@ -139,9 +140,9 @@ messages made from outside the Group context. For example:
 Group email
 ~~~~~~~~~~~
 
-The :class:`gs.content.email.base.GroupEmail` class is a subclass
-of :class:`SiteEmail` that is used by messages made from within
-the Group context. For example:
+The :class:`.GroupEmail` class is a subclass of
+:class:`.SiteEmail` that is used by messages made from within the
+Group context. For example:
 
 .. code-block:: xml
 
@@ -171,15 +172,15 @@ The plain-text version of the email bodies are supported by a
 Example
 ~~~~~~~
 
-The *Left* notification is sent to someone who leaves a group. It
-is, for the most-part, simple except for the
-:meth:`get_support_email` method.
+The *Left* notification is sent to a group administrator when a
+member leaves a group. It is, for the most-part, simple except
+for the :meth:`get_support_email` method.
 
-The link to email the support-group in notifications normally
-fills the ``Subject`` (providing a standard topic in the
-support-group) and body of the message (providing information
-that the person seeking support may forget to provide). The
-``Subject`` and ``body`` are translated using
+Notifications typically end with a link to email the support
+group. This ``mailto:`` normally fills the ``Subject`` (providing
+a standard topic in the support-group) and body of the message
+(providing information that the person seeking support may forget
+to provide). The ``Subject`` and ``body`` are translated using
 :func:`zope.i18n.translate`, and assembled into a ``mailto:`` URI
 using the :meth:`.SiteEmail.mailto` method.
 

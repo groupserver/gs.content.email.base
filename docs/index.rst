@@ -23,6 +23,7 @@ the :func:`gs.email.send_email` function, or the
 Resources
 =========
 
+- Documentation: https://groupserver.readthedocs.org/projects/gscontentemailbase/
 - Code repository: https://github.com/groupserver/gs.content.email.base/
 - Questions and comments to http://groupserver.org/groups/development
 - Report bugs at https://redmine.iopen.net/projects/groupserver
