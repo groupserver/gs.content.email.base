@@ -1,0 +1,10 @@
+setuptools
+lxml
+premailer
+zope.cachedescriptors
+zope.component
+zope.i18n
+zope.i18nmessageid
+git@github.com:groupserver/gs.content.base.git#egg=gs.content.base
+git@github.com:groupserver/Products.GSContent#egg=Products.GSContent
+gs.core
