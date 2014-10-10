@@ -48,7 +48,7 @@ setup(
     keywords='zope, page, site, email, notification, message, html',
     author='Michael JasonSmith',
     author_email='mpj17@onlinegroups.net',
-    url='https://source.iopen.net/groupserver/gs.content.email.base/',
+    url='https://github.com/groupserver/gs.content.email.base/',
     license='ZPL 2.1',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['gs', 'gs.content', 'gs.content.email'],

@@ -20,6 +20,13 @@ that can be sent by email. (The actual sending is done by either
 the :func:`gs.email.send_email` function, or the
 :class:`gs.profile.notify.MessageSender` class.)
 
+Resources
+=========
+
+- Code repository: https://github.com/groupserver/gs.content.email.base/
+- Questions and comments to http://groupserver.org/groups/development
+- Report bugs at https://redmine.iopen.net/projects/groupserver
+
 Indices and tables
 ==================
 

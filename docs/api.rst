@@ -106,9 +106,55 @@ the method, before the message is sent using
 Message bodies
 --------------
 
+There are two views. `Site email`_ is analogous to the
+``SitePage`` [#sitePage]_, while `group email`_ is the
+email-equivalent of ``GroupPage`` [#groupPage]_. However, both
+views over-write the ``__call__`` method.
+
+The ``__call__`` method of a page is called to produce the
+rendered form of the view. Both views defined here take the
+output from the super-class and run it through
+``premailer.transform`` [#premailer]_ before returning it. This
+results in HTML that can be sent as a MIME-attachment.
+
+Site email
+~~~~~~~~~~
+
+The :class:`gs.content.email.base.SiteEmail` class is used by
+messages made from outside the Group context. For example:
+
+.. code-block:: xml
+
+  <browser:page
+    name="notification.html"
+    for="Products.GSContent.interfaces.IGSSiteFolder"
+    class="gs.content.email.base.SiteEmail"
+    template="browser/templates/notification.pt"
+    permission="zope2.View"/>
+
 .. autoclass:: gs.content.email.base.SiteEmail
    :members: base, quote, mailto,  __call__
    :special-members:
+
+Group email
+~~~~~~~~~~~
+
+The :class:`gs.content.email.base.GroupEmail` class is a subclass
+of :class:`SiteEmail` that is used by messages made from within
+the Group context. For example:
+
+.. code-block:: xml
+
+  <browser:page
+    name="notification.html"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    class="gs.content.email.base.GroupEmail"
+    template="browser/templates/notification.pt"
+    permission="zope2.View"/>
+
+In addition to the ``siteInfo`` attribute, this class defines the
+``groupInfo`` attribute, which contains the name, URL, and ID of
+the current group.
 
 .. autoclass:: gs.content.email.base.GroupEmail
    :members:
@@ -179,3 +225,7 @@ filename for the page, and setting the correct header.
             filename = 'left-{0}-{1}.txt'.format(self.siteInfo.id,
                                                  self.groupInfo.id)
             self.set_header(filename)
+
+.. [#sitePage] See <https://github.com/groupserver/gs.content.base/>
+.. [#groupPage] See <https://github.com/groupserver/gs.group.base/>
+.. [#premailer] See <https://pypi.python.org/pypi/premailer/>
