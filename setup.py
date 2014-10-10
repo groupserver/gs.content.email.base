@@ -67,6 +67,7 @@ setup(
     ],
     test_suite="gs.content.email.base.tests.test_all",
     tests_require=['mock', 'zope.publisher', ],
+    extras_require={'docs': ['Sphinx']},
     entry_points="""
     # -*- Entry points: -*-
     """,)
