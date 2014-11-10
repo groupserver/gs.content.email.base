@@ -10,3 +10,10 @@ from .notifier import (NotifierABC, GroupNotifierABC)
 from .text import TextMixin
 from .anonymousnotifier import AnonymousNotifierABC
 #lint:enable
+
+# The Bootstrap CSS rightly contains non-standard CSS (such as
+# -moz-border-radius) that causes cssutils to complain. Loudly. At length.
+# cssutils doth protest too much.
+import cssutils
+import logging
+cssutils.log.setLevel(logging.CRITICAL)

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.1.1 (2014-11-10)
+------------------
+
+* Changing the logging-level for ``cssutils`` to ``CRITICAL``, thanks to
+  `the answer by Felix Carmona on Stack Overflow`_
+
+.. _the answer by Felix Carmona on Stack Overflow: http://stackoverflow.com/questions/20371448/stop-cssutils-from-generating-warning-messages
+
 2.1.0 (2014-09-15)
 ------------------
 
