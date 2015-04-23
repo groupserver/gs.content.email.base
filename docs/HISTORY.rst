@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.1.2 (2015-04-23)
+------------------
+
+* Dropping the ``lxml`` dependency, as I now understand that the
+  style element sometimes appears for the styles that cannot be
+  in-lined
+
 2.1.1 (2014-11-10)
 ------------------
 
@@ -53,3 +60,5 @@ Changelog
 ------------------
 
 * Initial version
+
+..  LocalWords:  Changelog
