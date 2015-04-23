@@ -12,15 +12,13 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ############################################################################
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, print_function, unicode_literals
 import sys
 if sys.version_info >= (3, ):  # pragma: no cover
     from urllib.parse import quote
 else:  # Python 2
     from urllib import quote
-from lxml.etree import (HTMLParser, fromstring as tree_fromstring,
-                        tostring as root_tostring)
-from premailer import transform
+from premailer import Premailer
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from gs.core import to_unicode_or_bust
@@ -86,21 +84,6 @@ group.'''
                                    body=quotedBody)
         return retval
 
-    @staticmethod
-    def remove_style_elements(html):
-        'Remove the style elements from some HTML'
-        parser = HTMLParser()
-        stripped = html.strip()
-        tree = tree_fromstring(stripped, parser)
-        rootTree = tree.getroottree()
-        root = rootTree.getroot()
-        style = root.findall('*/style')
-        for s in style:
-            parent = s.find('..')
-            parent.remove(s)
-        retval = root_tostring(root, encoding='utf-8', method='xml')
-        return retval
-
     def __call__(self, *args, **kw):
         '''Render the page, and then run it through :mod:`premailer`
 
@@ -118,9 +101,11 @@ This allows the HTML to be rendered consistently in email-clients.'''
         orig = super(SiteEmail, self).__call__(*args, **kw)
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
-            premailed = transform(orig, base_url=self.base)
-            clean = self.remove_style_elements(premailed)
-            retval = to_unicode_or_bust(clean)
+            premailer = Premailer(orig, disable_validation=True)
+            premailed = premailer.transform()
+            retval = to_unicode_or_bust(premailed)
+            if retval[:9] != '<!DOCTYPE':
+                retval = '<!DOCTYPE html>\n' + retval
         else:
             # --=mpj17=-- This is probabily plain-text, so just return it.
             retval = orig

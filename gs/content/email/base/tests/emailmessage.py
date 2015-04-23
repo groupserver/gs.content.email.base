@@ -74,7 +74,8 @@ class TestSiteEmailRemoveStyle(TestCase):
     </body>
 </html>'''
 
-    withStyleAttr = '''<html>
+    withStyleAttr = '''<!DOCTYPE html>
+<html>
     <head>
         <title>Ethyl the frog</title>
     </head>
@@ -88,19 +89,6 @@ class TestSiteEmailRemoveStyle(TestCase):
         'Discard newline and space characters, making testing easier.'
         retval = t.replace('\n', '').replace(' ', '')
         return retval
-
-    def test_remove_style(self):
-        'Test the removal of the <style> element'
-        siteEmail = SiteEmail(None, None)
-        r = siteEmail.remove_style_elements(self.withStyle)
-        self.assertEqual(self.discard_whitespace(self.withoutStyle),
-                         self.discard_whitespace(r))
-
-    def test_remove_style_no_style(self):
-        'Ensure that things are ok if there is no <style> element'
-        siteEmail = SiteEmail(None, None)
-        r = siteEmail.remove_style_elements(self.withoutStyle)
-        self.assertEqual(self.withoutStyle, r)
 
     def test_call(self):
         'Test the __call__ method, simulating rendering.'

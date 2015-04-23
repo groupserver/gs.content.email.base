@@ -57,7 +57,6 @@ setup(
     install_requires=[
         'setuptools',
         'cssutils',
-        'lxml',
         'premailer',
         'zope.cachedescriptors',
         'zope.component',
