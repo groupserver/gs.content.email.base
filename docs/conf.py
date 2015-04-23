@@ -57,7 +57,7 @@ copyright = u'2014, GroupServer.org'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-sys.path.append(os.path.abspath('../version.py'))
+sys.path.append(os.path.abspath('../'))
 from version import get_version
 # The full version, including alpha/beta/rc tags.
 release = get_version()
@@ -108,7 +108,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+# html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
