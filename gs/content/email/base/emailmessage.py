@@ -101,7 +101,10 @@ This allows the HTML to be rendered consistently in email-clients.'''
         orig = super(SiteEmail, self).__call__(*args, **kw)
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
-            premailer = Premailer(orig, disable_validation=True)
+            premailer = Premailer(
+                orig, preserve_internal_links=True, keep_style_tags=True,
+                remove_classes=False, strip_important=False,
+                disable_validation=True)
             premailed = premailer.transform()
             retval = to_unicode_or_bust(premailed)
             if retval[:9] != '<!DOCTYPE':
