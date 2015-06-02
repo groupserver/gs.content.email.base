@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.1.3 (2015-06-02)
+------------------
+
+* Keeping the CSS classes when processing the notification
+
 2.1.2 (2015-04-23)
 ------------------
 
