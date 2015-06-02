@@ -102,7 +102,7 @@ This allows the HTML to be rendered consistently in email-clients.'''
         if orig[0] == '<':
             # --=mpj17=-- This is probabily markup, so tidy it some.
             premailer = Premailer(
-                orig, preserve_internal_links=True, keep_style_tags=True,
+                orig, preserve_internal_links=True, keep_style_tags=False,
                 remove_classes=False, strip_important=False,
                 disable_validation=True)
             premailed = premailer.transform()
