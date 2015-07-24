@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2013, 2014 OnlineGroups.net and Contributors.
+# Copyright © 2013, 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -20,6 +20,11 @@ else:  # Python 2
     from urllib import quote
 from premailer import Premailer
 from zope.cachedescriptors.property import Lazy
+from zope.component import getUtility
+from zope.component.interfaces import ComponentLookupError
+from zope.location.interfaces import LocationError
+from zope.publisher.interfaces.browser import IBrowserSkinType
+from zope.publisher.skinnable import applySkin
 from zope.component import createObject
 from gs.core import to_unicode_or_bust
 from gs.content.base import SitePage
@@ -36,6 +41,28 @@ class SiteEmail(SitePage):
 
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
+        self.set_email_skin()
+
+    def set_email_skin(self):
+        # Most of this was stolen from the
+        # zope.traversal.namespace.skin class
+
+        # 1.  Look up skin-name in the the site config. If not found
+        #     return. This relies on acquisition. Sorry.
+        config = getattr(self.context, 'DivisionConfiguration', None)
+        if not(config):
+            return  # Sorry, Dijkstra
+        name = config.getProperty('emailSkin', None)
+        if not(name):
+            return  # Sorry, Dijkstra
+        # 2.  Look up the interface with the skin-name
+        try:
+            skin = getUtility(IBrowserSkinType, name)
+        except ComponentLookupError:
+            raise LocationError("emailSkin %s" % name)
+        # 3.  Apply the skin to the interface using
+        #     zope.publisher.skinnable.applySkin
+        applySkin(self.request, skin)
 
     @Lazy
     def base(self):

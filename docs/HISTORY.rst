@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.2.0 (2015-07-24)
+------------------
+
+* Better support with sites with multiple sites, by looking up
+  the skin name in the ``emailSkin`` property of the
+  ``DivisionConfig`` object
+
 2.1.3 (2015-06-02)
 ------------------
 
