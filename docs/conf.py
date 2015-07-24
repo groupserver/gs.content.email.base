@@ -51,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'gs.content.email.base'
-copyright = u'2014, GroupServer.org'
+copyright = u'2015, GroupServer.org'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -339,4 +339,12 @@ epub_exclude_files = ['search.html']
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/2.7', None),
+    'gscontentemailbase': ('http://groupserver.readthedocs.org/projects/gscontentemailbase/en/latest', None),
+#    'gscontentemailcss': ('http://groupserver.readthedocs.org/projects/gscontentemailcss/en/latest', None),
+    'gscontentemaillayout': ('http://groupserver.readthedocs.org/projects/gscontentemaillayout/en/latest', None),
+    'gsemail': ('http://groupserver.readthedocs.org/projects/gsemail/en/latest/', None),
+    'gsprofilenotify': ('http://groupserver.readthedocs.org/projects/gsprofilenotify/en/latest/', None),
+
+}

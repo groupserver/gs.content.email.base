@@ -41,12 +41,21 @@ class SiteEmail(SitePage):
 
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
-        self.set_email_skin()
+        self.set_skin()
 
-    def set_email_skin(self):
-        # Most of this was stolen from the
-        # zope.traversal.namespace.skin class
+    def set_skin(self):
+        '''Set the correct skin on the request
 
+The request that leads to an email going out may be processed on a different
+site to the site that the request is for. To handle this the ``emailSkin``
+property of the ``DivisionConfiguration`` is looked up. If no skin is
+specified then the defaults are used.
+
+:raises: zope.component.interfaces.ComponentLookupError: if the skin cannot
+         be found.
+
+.. seealso:: This code was based on the
+             :class:`zope.traversal.namespace.skin` class.'''
         # 1.  Look up skin-name in the the site config. If not found
         #     return. This relies on acquisition. Sorry.
         config = getattr(self.context, 'DivisionConfiguration', None)

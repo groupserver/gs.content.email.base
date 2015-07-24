@@ -30,9 +30,12 @@ See `the documentation`_ for more detailed information.
 Resources
 =========
 
-- Documentation: https://groupserver.readthedocs.org/projects/gscontentemailbase/
-- Code repository: https://github.com/groupserver/gs.content.email.base/
-- Questions and comments to http://groupserver.org/groups/development
+- Documentation:
+  https://groupserver.readthedocs.org/projects/gscontentemailbase/
+- Code repository:
+  https://github.com/groupserver/gs.content.email.base/
+- Questions and comments to
+  http://groupserver.org/groups/development
 - Report bugs at https://redmine.iopen.net/projects/groupserver
 
 .. _GroupServer: http://groupserver.org/
@@ -41,7 +44,8 @@ Resources
 .. _Michael JasonSmith: http://groupserver.org/p/mpj17/
 .. _Creative Commons Attribution-Share Alike 4.0 International License:
     http://creativecommons.org/licenses/by-sa/4.0/
-.. _the documentation: https://groupserver.readthedocs.org/projects/gscontentemailbase/
+.. _the documentation:
+   https://groupserver.readthedocs.org/projects/gscontentemailbase/
 
 ..  LocalWords:  SiteEmail SitePage GroupEmail sitePage groupPage html
 ..  LocalWords:  premailer IGSSiteFolder siteInfo groupserver TextMixin
