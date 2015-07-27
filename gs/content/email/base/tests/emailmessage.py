@@ -12,7 +12,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ############################################################################
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, unicode_literals, print_function
 from mock import MagicMock, patch
 from unittest import TestCase
 from zope.publisher.browser import TestRequest
@@ -155,6 +155,7 @@ class TestGroupEmail(TestCase):
 
 class TestSkinning(TestCase):
     'Test the application of skins'
+    skinName = 'gs-content.email-base-tests-emailmessage-skin'
 
     @patch('gs.content.email.base.emailmessage.applySkin')
     def test_no_config(self, faux_applySkin):
@@ -184,10 +185,32 @@ class TestSkinning(TestCase):
     def test_skin_not_found(self, faux_getUtility, faux_applySkin):
         'Test that we handle a missing skin correctly'
         context = MagicMock()
+        request = MagicMock()
         dc = context.DivisionConfiguration
-        dc.getProperty.return_value = 'gs-content.email-base-tests-emailmessage-skin'
-        siteEmail = SiteEmail(context, None)
+        dc.getProperty.return_value = self.skinName
+        siteEmail = SiteEmail(context, request)
         faux_getUtility.side_effect = gs.content.email.base.emailmessage.ComponentLookupError()
 
         with self.assertRaises(gs.content.email.base.emailmessage.LocationError):
             siteEmail.set_skin()
+        faux_getUtility.assert_called_with(
+            gs.content.email.base.emailmessage.IBrowserSkinType,
+            self.skinName)
+
+    @patch('gs.content.email.base.emailmessage.applySkin')
+    @patch('gs.content.email.base.emailmessage.getUtility')
+    def test_apply_skin(self, faux_getUtility, faux_applySkin):
+        'Test that we actually apply the skin'
+        context = MagicMock()
+        request = MagicMock()
+        dc = context.DivisionConfiguration
+        dc.getProperty.return_value = self.skinName
+        fauxSkin = faux_getUtility()
+        siteEmail = SiteEmail(context, request)
+
+        r = siteEmail.set_skin()
+        self.assertIsNone(r)
+        faux_getUtility.assert_called_with(
+            gs.content.email.base.emailmessage.IBrowserSkinType,
+            self.skinName)
+        faux_applySkin.assert_called_with(request, fauxSkin)
