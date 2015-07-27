@@ -62,6 +62,8 @@ setup(
         'zope.component',
         'zope.i18n',
         'zope.i18nmessageid',
+        'zope.location',
+        'zope.publisher',
         'gs.content.base',
         'gs.core',
     ],
