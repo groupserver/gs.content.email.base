@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -13,7 +13,7 @@
 #
 ############################################################################
 from __future__ import absolute_import, unicode_literals
-from mock import MagicMock
+from mock import MagicMock, patch
 from unittest import TestCase
 from zope.publisher.browser import TestRequest
 from gs.content.email.base.emailmessage import SiteEmail, GroupEmail
@@ -151,3 +151,43 @@ class TestGroupEmail(TestCase):
         self.assertEqual('g?', r)
         mod.createObject.assert_called_once_with(
             'groupserver.GroupInfo', None)
+
+
+class TestSkinning(TestCase):
+    'Test the application of skins'
+
+    @patch('gs.content.email.base.emailmessage.applySkin')
+    def test_no_config(self, faux_applySkin):
+        'Test a missing DivisionConfiguration'
+        context = MagicMock()
+        context.DivisionConfiguration = None
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.set_skin()
+        self.assertIsNone(r)
+        self.assertEqual(0, faux_applySkin.call_count)
+
+    @patch('gs.content.email.base.emailmessage.applySkin')
+    def test_no_emailSkin(self, faux_applySkin):
+        'Test when the emailSkin property is missing from the DivisionConfiguration'
+        context = MagicMock()
+        dc = context.DivisionConfiguration
+        dc.getProperty.return_value = None
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.set_skin()
+        self.assertIsNone(r)
+        self.assertEqual(0, faux_applySkin.call_count)
+
+    @patch('gs.content.email.base.emailmessage.applySkin')
+    @patch('gs.content.email.base.emailmessage.getUtility')
+    def test_skin_not_found(self, faux_getUtility, faux_applySkin):
+        'Test that we handle a missing skin correctly'
+        context = MagicMock()
+        dc = context.DivisionConfiguration
+        dc.getProperty.return_value = 'gs-content.email-base-tests-emailmessage-skin'
+        siteEmail = SiteEmail(context, None)
+        faux_getUtility.side_effect = gs.content.email.base.emailmessage.ComponentLookupError()
+
+        with self.assertRaises(gs.content.email.base.emailmessage.LocationError):
+            siteEmail.set_skin()

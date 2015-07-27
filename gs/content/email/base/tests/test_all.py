@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ############################################################################
 #
-# Copyright © 2014 OnlineGroups.net and Contributors.
+# Copyright © 2014, 2015 OnlineGroups.net and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -16,14 +16,14 @@ from __future__ import absolute_import, unicode_literals
 from unittest import TestSuite, main as unittest_main
 from gs.content.email.base.tests.emailmessage import (
     TestSiteEmailBase, TestSiteEmailRemoveStyle, TestGroupEmail,
-    TestEmailMailto)
+    TestEmailMailto, TestSkinning)
 from gs.content.email.base.tests.text import (TestTextMixinFill,
                                               TestTextMixinHeader)
 from gs.content.email.base.tests.notifier import (TestNotifier,
                                                   TestAnonymousNotifier)
 
 testCases = (TestSiteEmailBase, TestSiteEmailRemoveStyle, TestGroupEmail,
-             TestEmailMailto, TestTextMixinFill, TestTextMixinHeader,
+             TestEmailMailto, TestSkinning, TestTextMixinFill, TestTextMixinHeader,
              TestNotifier, TestAnonymousNotifier)
 
 
