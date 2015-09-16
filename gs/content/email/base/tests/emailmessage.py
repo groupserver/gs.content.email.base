@@ -157,34 +157,91 @@ class TestSkinning(TestCase):
     'Test the application of skins'
     skinName = 'gs-content.email-base-tests-emailmessage-skin'
 
-    @patch('gs.content.email.base.emailmessage.applySkin')
-    def test_no_config(self, faux_applySkin):
-        'Test a missing DivisionConfiguration'
-        context = MagicMock()
-        context.DivisionConfiguration = None
+    @patch.object(SiteEmail, 'set_skin')
+    def test_property_from_config_missing_config(self, mock_set_skin):
+        'Test getting a property when there is no config'
+        context = MagicMock(spec=['OtherConfig'])
         siteEmail = SiteEmail(context, None)
 
-        r = siteEmail.set_skin()
-        self.assertIsNone(r)
-        self.assertEqual(0, faux_applySkin.call_count)
+        r = siteEmail.property_from_config(b'DivisionConfiguration', b'emailSkin')
 
-    @patch('gs.content.email.base.emailmessage.applySkin')
-    def test_no_emailSkin(self, faux_applySkin):
-        'Test when the emailSkin property is missing from the DivisionConfiguration'
-        context = MagicMock()
-        dc = context.DivisionConfiguration
-        dc.getProperty.return_value = None
+        self.assertIsNone(r)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_property_from_config_missing_property(self, mock_set_skin):
+        'Test getting a property when there is no property on the config'
+        context = MagicMock(spec=['DivisionConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = None
         siteEmail = SiteEmail(context, None)
 
-        r = siteEmail.set_skin()
+        r = siteEmail.property_from_config(b'DivisionConfiguration', b'emailSkin')
+
         self.assertIsNone(r)
-        self.assertEqual(0, faux_applySkin.call_count)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_property_from_config(self, mock_set_skin):
+        'Test getting a property from a config'
+        context = MagicMock(spec=['DivisionConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = self.skinName
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.property_from_config(b'DivisionConfiguration', b'emailSkin')
+
+        self.assertEqual(self.skinName, r)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_skin_name_missing(self, mock_set_skin):
+        'Test getting the skin name when it is missing from all config'
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = None
+        context.GlobalConfiguration.getProperty.return_value = None
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.skin_name
+
+        self.assertIsNone(r)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_skin_name_global(self, mock_set_skin):
+        'Test getting the skin name when it is in just the global config'
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = None
+        context.GlobalConfiguration.getProperty.return_value = self.skinName
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.skin_name
+
+        self.assertEqual(self.skinName, r)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_skin_name_local(self, mock_set_skin):
+        'Test getting the skin name when it is in just the division config'
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = self.skinName
+        context.GlobalConfiguration.getProperty.return_value = None
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.skin_name
+
+        self.assertEqual(self.skinName, r)
+
+    @patch.object(SiteEmail, 'set_skin')
+    def test_skin_name_override(self, mock_set_skin):
+        'Test getting the skin name when it is in both the division and global config'
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
+        context.DivisionConfiguration.getProperty.return_value = 'local'
+        context.GlobalConfiguration.getProperty.return_value = 'global'
+        siteEmail = SiteEmail(context, None)
+
+        r = siteEmail.skin_name
+
+        self.assertEqual('local', r)
 
     @patch('gs.content.email.base.emailmessage.applySkin')
     @patch('gs.content.email.base.emailmessage.getUtility')
     def test_skin_not_found(self, faux_getUtility, faux_applySkin):
         'Test that we handle a missing skin correctly'
-        context = MagicMock()
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
         request = MagicMock()
         dc = context.DivisionConfiguration
         dc.getProperty.return_value = self.skinName
@@ -201,10 +258,29 @@ class TestSkinning(TestCase):
     @patch('gs.content.email.base.emailmessage.getUtility')
     def test_apply_skin(self, faux_getUtility, faux_applySkin):
         'Test that we actually apply the skin'
-        context = MagicMock()
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
         request = MagicMock()
         dc = context.DivisionConfiguration
         dc.getProperty.return_value = self.skinName
+        fauxSkin = faux_getUtility()
+        siteEmail = SiteEmail(context, request)
+
+        r = siteEmail.set_skin()
+        self.assertIsNone(r)
+        faux_getUtility.assert_called_with(
+            gs.content.email.base.emailmessage.IBrowserSkinType,
+            self.skinName)
+        faux_applySkin.assert_called_with(request, fauxSkin)
+
+    @patch('gs.content.email.base.emailmessage.applySkin')
+    @patch('gs.content.email.base.emailmessage.getUtility')
+    def test_apply_skin_global(self, faux_getUtility, faux_applySkin):
+        'Test that we actually apply the skin'
+        context = MagicMock(spec=['DivisionConfiguration', 'GlobalConfiguration'])
+        request = MagicMock()
+        context.DivisionConfiguration = None
+        gc = context.GlobalConfiguration
+        gc.getProperty.return_value = self.skinName
         fauxSkin = faux_getUtility()
         siteEmail = SiteEmail(context, request)
 

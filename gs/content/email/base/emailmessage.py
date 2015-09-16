@@ -43,6 +43,22 @@ class SiteEmail(SitePage):
         super(SiteEmail, self).__init__(context, request)
         self.set_skin()
 
+    def property_from_config(self, configName, propertyName):
+        retval = None
+        config = getattr(self.context, configName, None)
+        if config:
+            retval = config.getProperty(propertyName, None)
+        return retval
+
+    @property
+    def skin_name(self):
+        # 1.  Look up skin-name in the the site or global config. If not found
+        #     return None. This relies on acquisition. Sorry.
+        retval = self.property_from_config(b'DivisionConfiguration', b'emailSkin')
+        if retval is None:
+            retval = self.property_from_config(b'GlobalConfiguration', b'emailSkin')
+        return retval
+
     def set_skin(self):
         '''Set the correct skin on the request
 
@@ -56,12 +72,8 @@ specified then the defaults are used.
 
 .. seealso:: This code was based on the
              :class:`zope.traversal.namespace.skin` class.'''
-        # 1.  Look up skin-name in the the site config. If not found
-        #     return. This relies on acquisition. Sorry.
-        config = getattr(self.context, 'DivisionConfiguration', None)
-        if not(config):
-            return  # Sorry, Dijkstra
-        name = config.getProperty('emailSkin', None)
+        # 1. Look up the skin name
+        name = self.skin_name
         if not(name):
             return  # Sorry, Dijkstra
         # 2.  Look up the interface with the skin-name

@@ -36,8 +36,9 @@ is then retrieved and applied to the ``request`` object. (The
 :mod:`zope.traversing` subsystem does this for web-requests.)
 
 The skin-name is recorded in the ``emailSkin`` property of the
-``DivisionConfig`` object. Set this property to the skin name,
-such as ``gs_green`` for the GroupServer green skin, or
+``DivisionConfig`` object, or the ``GlobalConfiguration`` object
+(the former over-rides the latter). Set this property to the skin
+name, such as ``gs_green`` for the GroupServer green skin, or
 ``gs_blue`` for the blue skin. (The default is grey.) While you
 could use a different skin from that used on the web, this is
 discourage because it is likely to confuse the members of your
