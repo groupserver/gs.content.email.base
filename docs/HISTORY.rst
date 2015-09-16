@@ -1,12 +1,19 @@
 Changelog
 =========
 
+2.3.0 (2015-09-16)
+------------------
+
+* Extending the look up of the skin name — so it uses the
+  ``GlobalConfiguration`` object as well as the
+  ``DivisionConfiguration`` object
+
 2.2.0 (2015-07-24)
 ------------------
 
-* Better support for GroupServer installs with multiple sites, by
-  looking up the skin name in the ``emailSkin`` property of the
-  ``DivisionConfig`` object
+* Improving support for GroupServer installs with multiple sites,
+  by looking up the skin name in the ``emailSkin`` property of
+  the ``DivisionConfig`` object
 
 2.1.3 (2015-06-02)
 ------------------
