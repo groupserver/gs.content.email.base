@@ -1,6 +1,17 @@
 Changelog
 =========
 
+2.3.1 (2015-09-17)
+------------------
+
+* Fixing the colour codes for IBM Notes, based on `a hack`_ by
+  `Eli Dickinson`_
+
+.. _a hack:
+   https://github.com/peterbe/premailer/issues/114#issuecomment-117219868
+
+.. _Eli Dickinson: https://github.com/elidickinson
+
 2.3.0 (2015-09-16)
 ------------------
 
