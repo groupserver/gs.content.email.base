@@ -13,6 +13,7 @@
 #
 ############################################################################
 from __future__ import absolute_import, print_function, unicode_literals
+import re
 import sys
 if sys.version_info >= (3, ):  # pragma: no cover
     from urllib.parse import quote
@@ -132,6 +133,19 @@ group.'''
                                    body=quotedBody)
         return retval
 
+    @staticmethod
+    def fix_color_codes(html):
+        # Hacky fix for Lotus Notes. It doesn't handle three character bgcolor codes well
+        #   see https://github.com/peterbe/premailer/issues/114
+        shortBGcolorCodes = re.compile(r'bgcolor="#([0-9A-F])([0-9A-F])([0-9A-F])"', re.I)
+        # double digits to enlongen color code
+        fullHex = shortBGcolorCodes.sub(r'bgcolor="#\1\1\2\2\3\3"', html)
+
+        # --=mpj17=-- Drop "transparent" bgcolor values entirely
+        transparentBGcolor = re.compile(r' bgcolor="transparent"', re.I)  # The space is deliberate
+        retval = transparentBGcolor.sub('', fullHex)
+        return retval
+
     def __call__(self, *args, **kw):
         '''Render the page, and then run it through :mod:`premailer`
 
@@ -154,7 +168,8 @@ This allows the HTML to be rendered consistently in email-clients.'''
                 remove_classes=False, strip_important=False,
                 disable_validation=True)
             premailed = premailer.transform()
-            retval = to_unicode_or_bust(premailed)
+            enlongened = self.fix_color_codes(premailed)
+            retval = to_unicode_or_bust(enlongened)
             if retval[:9] != '<!DOCTYPE':
                 retval = '<!DOCTYPE html>\n' + retval
         else:

@@ -103,6 +103,15 @@ class TestSiteEmailRemoveStyle(TestCase):
         self.assertEqual(self.discard_whitespace(self.withStyleAttr),
                          self.discard_whitespace(r))
 
+    def test_fix_color_codes(self):
+        t = '<td bgcolor="transparent"><p bgcolor="#fff">Hej</p></td>'
+        siteEmail = SiteEmail(None, None)
+
+        r = siteEmail.fix_color_codes(t)
+
+        e = '<td><p bgcolor="#ffffff">Hej</p></td>'
+        self.assertEqual(e, r)
+
 
 class TestEmailMailto(TestCase):
     'Test the mailto creation part of the Email class'
