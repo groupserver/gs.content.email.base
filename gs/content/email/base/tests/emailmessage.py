@@ -142,7 +142,7 @@ class TestEmailMailto(TestCase):
         siteEmail = SiteEmail(None, None)
         r = siteEmail.mailto(to, subject, body)
 
-        expected = 'mailto:support@lists.example.com?Subject=A%20message'\
+        expected = 'mailto:support@lists.example.com?subject=A%20message'\
             '&body=This%20is%20unicode%20text%20%E2%80%94%20actually'
         self.assertEqual(expected, r)
 

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 ############################################################################
 #
 # Copyright © 2013, 2014, 2015 OnlineGroups.net and Contributors.
@@ -38,7 +38,7 @@ class SiteEmail(SitePage):
 :param object request: The request for the page.'''
 
     #: The mailto URI, for writing email messages to support.
-    MAILTO = 'mailto:{to}?Subject={subject}&body={body}'
+    MAILTO = 'mailto:{to}?subject={subject}&body={body}'
 
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
