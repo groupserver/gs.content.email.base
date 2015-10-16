@@ -9,9 +9,9 @@ Support for HTML-formatted email notifications in GroupServer
 :Contact: Michael JasonSmith <mpj17@onlinegroups.net>
 :Date: 2014-10-10
 :Organization: `GroupServer.org`_
-:Copyright: This document is licensed under a
-  `Creative Commons Attribution-Share Alike 4.0 International License`_
-  by `OnlineGroups.Net`_.
+:Copyright: This document is licensed under a `Creative Commons
+  Attribution-Share Alike 4.0 International License`_ by
+  `OnlineGroups.Net`_.
 
 Introduction
 ============
