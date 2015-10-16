@@ -14,11 +14,6 @@
 ############################################################################
 from __future__ import absolute_import, print_function, unicode_literals
 import re
-import sys
-if sys.version_info >= (3, ):  # pragma: no cover
-    from urllib.parse import quote
-else:  # Python 2
-    from urllib import quote
 from premailer import Premailer
 from zope.cachedescriptors.property import Lazy
 from zope.component import getUtility
@@ -27,7 +22,7 @@ from zope.location.interfaces import LocationError
 from zope.publisher.interfaces.browser import IBrowserSkinType
 from zope.publisher.skinnable import applySkin
 from zope.component import createObject
-from gs.core import to_unicode_or_bust
+from gs.core import mailto, to_unicode_or_bust
 from gs.content.base import SitePage
 
 
@@ -36,9 +31,6 @@ class SiteEmail(SitePage):
 
 :param object context: The context for the page.
 :param object request: The request for the page.'''
-
-    #: The mailto URI, for writing email messages to support.
-    MAILTO = 'mailto:{to}?subject={subject}&body={body}'
 
     def __init__(self, context, request):
         super(SiteEmail, self).__init__(context, request)
@@ -99,20 +91,7 @@ specified then the defaults are used.
         return retval
 
     @staticmethod
-    def quote(val):
-        '''Quote a value in such a way that it can be put in a ``mailto``
-
-:param str val: The value to quote.
-:returns: The quoted value, encoded in UTF-8, and escaped so it is safe in
-          a URI.
-:rtype: str'''
-        uval = to_unicode_or_bust(val)
-        utf8val = uval.encode('utf-8')
-        retval = quote(utf8val)
-        return retval
-
-    @classmethod
-    def mailto(cls, toAddress, subject, body):
+    def mailto(toAddress, subject, body):
         '''Create a ``mailto`` URI
 
 :param str toAddress: The address for the ``mailto``.
@@ -126,11 +105,11 @@ notifications. These ``mailto`` links normally are directed at the email
 address for the support group for the site, and contain information that
 will be useful in the support group, such as links to the profile of the
 person who received the notification, and links back to the relevant
-group.'''
-        quotedSubject = cls.quote(subject)
-        quotedBody = cls.quote(body)
-        retval = cls.MAILTO.format(to=toAddress, subject=quotedSubject,
-                                   body=quotedBody)
+group.
+
+Actually just a wrapper for :func:`gs.core.mailto`, added to the :class:`SiteEmail` class for
+convinence.'''
+        retval = mailto(toAddress, subject, body)
         return retval
 
     @staticmethod
