@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.3.3 (2015-10-16)
+------------------
+
+* Using ``gs.core.mailto`` to construct the mailto
+
 2.3.2 (2015-09-21)
 ------------------
 
