@@ -134,7 +134,7 @@ outside the Group context. For example:
     permission="zope2.View"/>
 
 .. autoclass:: gs.content.email.base.SiteEmail
-   :members: base, quote, mailto,  __call__
+   :members: base, mailto,  __call__
    :special-members:
 
 Group email

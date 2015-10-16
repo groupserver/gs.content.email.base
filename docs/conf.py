@@ -341,6 +341,7 @@ epub_exclude_files = ['search.html']
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'python': ('https://docs.python.org/2.7', None),
+    'gscore': ('http://groupserver.readthedocs.org/projects/gscore/en/latest', None),
     'gscontentemailbase': ('http://groupserver.readthedocs.org/projects/gscontentemailbase/en/latest', None),
 #    'gscontentemailcss': ('http://groupserver.readthedocs.org/projects/gscontentemailcss/en/latest', None),
     'gscontentemaillayout': ('http://groupserver.readthedocs.org/projects/gscontentemaillayout/en/latest', None),

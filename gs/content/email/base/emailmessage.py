@@ -94,6 +94,8 @@ specified then the defaults are used.
     def mailto(toAddress, subject, body):
         '''Create a ``mailto`` URI
 
+.. current-module: gs.content.email.base
+
 :param str toAddress: The address for the ``mailto``.
 :param str subject: The subject for the email.
 :param str body: The body of the message.
@@ -107,8 +109,7 @@ will be useful in the support group, such as links to the profile of the
 person who received the notification, and links back to the relevant
 group.
 
-Actually just a wrapper for :func:`gs.core.mailto`, added to the :class:`SiteEmail` class for
-convinence.'''
+Actually just a wrapper for :func:`gs.core.mailto`, added to this class for convinence.'''
         retval = mailto(toAddress, subject, body)
         return retval
 
