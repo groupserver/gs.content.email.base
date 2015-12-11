@@ -115,27 +115,21 @@ class TestSiteEmailRemoveStyle(TestCase):
 
 class TestEmailMailto(TestCase):
     'Test the mailto creation part of the Email class'
-    def test_quote_unicode(self):
-        'Test quoting a Unicode string'
-        siteEmail = SiteEmail(None, None)
-        r = siteEmail.quote('unicode text')
-        self.assertEqual('unicode%20text', r)
 
-    def test_quote_unicode_full(self):
-        'Test quoting a Unicode string with non-ASCII in it'
+    def test_mailto_ascii(self):
+        'Test the construction of a "mailto" URI with Unicode'
+        body = b'This is ASCII text actually'
+        subject = b'A message'
+        to = b'support@lists.example.com'
         siteEmail = SiteEmail(None, None)
-        r = siteEmail.quote('This is unicode text \u2014 actually')
-        self.assertEqual(
-            'This%20is%20unicode%20text%20%E2%80%94%20actually', r)
+        r = siteEmail.mailto(to, subject, body)
 
-    def test_quote_ascii(self):
-        'Test quoting an ASCII string'
-        siteEmail = SiteEmail(None, None)
-        r = siteEmail.quote(b'ascii text')
-        self.assertEqual('ascii%20text', r)
+        expected = 'mailto:support@lists.example.com?subject=A%20message'\
+            '&body=This%20is%20ASCII%20text%20actually'
+        self.assertEqual(expected, r)
 
     def test_mailto(self):
-        'Test the construction of a "mailto" URI'
+        'Test the construction of a "mailto" URI with Unicode'
         body = 'This is unicode text \u2014 actually'
         subject = 'A message'
         to = 'support@lists.example.com'
