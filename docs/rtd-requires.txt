@@ -6,4 +6,4 @@ zope.i18n
 zope.i18nmessageid
 -e git+https://github.com/groupserver/gs.content.base.git@master#egg=gs.content.base
 gs.core
-ExtensionClass==4.1a1
+ExtensionClass>=4.1.1
