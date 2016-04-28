@@ -31,7 +31,7 @@ Resources
 =========
 
 - Documentation:
-  https://groupserver.readthedocs.org/projects/gscontentemailbase/
+  https://groupserver.readthedocs.io/projects/gscontentemailbase/
 - Code repository:
   https://github.com/groupserver/gs.content.email.base/
 - Questions and comments to
@@ -45,7 +45,7 @@ Resources
 .. _Creative Commons Attribution-Share Alike 4.0 International License:
     http://creativecommons.org/licenses/by-sa/4.0/
 .. _the documentation:
-   https://groupserver.readthedocs.org/projects/gscontentemailbase/
+   https://groupserver.readthedocs.io/projects/gscontentemailbase/
 
 ..  LocalWords:  SiteEmail SitePage GroupEmail sitePage groupPage html
 ..  LocalWords:  premailer IGSSiteFolder siteInfo groupserver TextMixin
