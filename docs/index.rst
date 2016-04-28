@@ -36,7 +36,7 @@ Resources
 =========
 
 - Documentation:
-  https://groupserver.readthedocs.org/projects/gscontentemailbase/
+  https://groupserver.readthedocs.io/projects/gscontentemailbase/
 - Code repository:
   https://github.com/groupserver/gs.content.email.base/
 - Questions and comments to
