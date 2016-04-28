@@ -11,7 +11,7 @@ skin-name as is used on the web (see the documentation on
              default `gs.skin.blue`_ and `gs.skin.green`_.
 
 .. _configuring a web proxy and GroupServer:
-   http://groupserver.readthedocs.org/en/master/proxy-configure.html
+   http://groupserver.readthedocs.io/en/master/proxy-configure.html
 .. _gs.skin.blue: https://github.com/groupserver/gs.skin.blue
 .. _gs.skin.green: https://github.com/groupserver/gs.skin.green
 
